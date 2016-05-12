@@ -80,8 +80,11 @@ void physics_tick() {
             }
 
             double theta = atan2(q->y - p->y, q->x - p->x);
-            double fx = p->mass / rSqrd * cos(theta);
-            double fy = p->mass / rSqrd * sin(theta);
+
+            // F = G m1 m2 / r^2
+            double force = GRAV_CONST * p->mass * q->mass / rSqrd;
+            double fx = force * cos(theta);
+            double fy = force * sin(theta);
 
             p->vx += fx;
             p->vy += fy;

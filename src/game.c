@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 
     srand(time(NULL));
 
-    for (int i=0; i<100; i++) {
+    for (int i=0; i<50; i++) {
         printf("Adding a projectile.\n");
         // get random x, y, vx, vy
         add_projectile(
@@ -40,6 +40,12 @@ int main(int argc, char** argv) {
 
     // Add a big one
     add_projectile(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 0, 100);
+
+/*
+    add_projectile(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20, 0, 0, 20);
+    add_projectile(SCREEN_WIDTH, SCREEN_HEIGHT/2 + 20, -2, 0, 20);
+*/
+
 
     emscripten_set_main_loop(game_tick, 0, 1);
 

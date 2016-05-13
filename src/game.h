@@ -10,8 +10,8 @@
 #include <emscripten.h>
 #endif
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 800 
+#define SCREEN_HEIGHT 600
 #define SCREEN_BPP 32
 #define FPS 15
 

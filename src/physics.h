@@ -2,7 +2,7 @@
 #define PHYSICS_H
 
 #define FRICTION 0.60
-#define GRAV_CONST 0.05
+#define GRAV_CONST 0.1
 
 struct projectile {
     double x, y, vx, vy;

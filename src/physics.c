@@ -3,7 +3,7 @@
 #include "game.h"
 #include "physics.h"
 
-#define MAX_PROJECTILES 1000
+#define MAX_PROJECTILES 2000
 
 static struct projectile projectile[MAX_PROJECTILES];
 static int num_projectiles = 0;
@@ -22,14 +22,15 @@ void add_projectile(double x, double y, double vx, double vy, double mass) {
     }
 
     struct projectile *p = get_projectile(num_projectiles);
-    num_projectiles++;
 
     p->x = x;
     p->y = y;
     p->vx = vx;
     p->vy = vy;
     p->mass = mass;
-    p->diam = (int)mass;
+    p->diam = (int)mass/5;
+
+    num_projectiles++;
 }
 
 void physics_tick() {
@@ -75,7 +76,7 @@ void physics_tick() {
             double rSqrd = pow(q->x - p->x, 2) + pow(q->y - p->y, 2);
             double r = sqrt(rSqrd);
 
-            if (r < 10) {
+            if (r < 3) {
                 continue;
             }
 
@@ -86,8 +87,14 @@ void physics_tick() {
             double fx = force * cos(theta);
             double fy = force * sin(theta);
 
-            p->vx += fx;
-            p->vy += fy;
+
+            // F = ma
+            // a = F/m
+            double ax = fx / p->mass;
+            double ay = fy / p->mass;
+
+            p->vx += ax;
+            p->vy += ay;
         }
 
     }

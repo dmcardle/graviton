@@ -22,30 +22,25 @@ int main(int argc, char** argv) {
     EM_ASM("SDL.defaults.copyOnLock = false; SDL.defaults.discardOnLock = true; SDL.defaults.opaqueFrontBuffer = false;");
 #endif
 
-
-    printf("Setting up main loop\n");
-
     srand(time(NULL));
 
-    for (int i=0; i<50; i++) {
-        printf("Adding a projectile.\n");
+    for (int i=0; i<100; i++) {
         // get random x, y, vx, vy
         add_projectile(
             rand() % SCREEN_WIDTH,
             rand() % SCREEN_HEIGHT,
             rand() % 20 - 10,
             rand() % 20 - 10,
-            20);
+            rand() % 50 + 5);
     }
 
     // Add a big one
     add_projectile(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 0, 100);
 
-/*
+    /*
     add_projectile(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20, 0, 0, 20);
     add_projectile(SCREEN_WIDTH, SCREEN_HEIGHT/2 + 20, -2, 0, 20);
-*/
-
+    */
 
     emscripten_set_main_loop(game_tick, 0, 1);
 
@@ -89,7 +84,12 @@ void game_tick() {
 
         SDL_Rect rect = {x, y, d, d};
 
-        SDL_FillRect(screen, &rect, SDL_MapRGBA(screen->format, 255, 0, 0, 255));
+        int r, g, b;
+        r = 255; 
+        g = (int)(255.0 * p->mass / 60.0);
+        b = 0;
+
+        SDL_FillRect(screen, &rect, SDL_MapRGBA(screen->format, r, g, b, 255));
     }
 
     //if (SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
